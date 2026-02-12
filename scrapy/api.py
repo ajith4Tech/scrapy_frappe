@@ -1,0 +1,41 @@
+import frappe
+import hashlib
+from frappe.utils import now
+
+
+@frappe.whitelist()
+def upsert(**data):
+
+    if not data.get("title") or not data.get("organization"):
+        frappe.throw("Title and Organization are required")
+
+    raw = f"{data.get('title','').strip().lower()}|{data.get('organization','').strip().lower()}|{data.get('source_url','')}"
+    generated_hash = hashlib.sha256(raw.encode()).hexdigest()
+
+    existing = frappe.db.exists(
+        "Scraping Site",
+        {"hash": generated_hash}
+    )
+
+    if existing:
+        doc = frappe.get_doc("Scraping Site", existing)
+    else:
+        doc = frappe.new_doc("Scraping Site")
+
+    doc.update({
+        "title": data.get("title"),
+        "organization": data.get("organization"),
+        "funding_amount": data.get("funding_amount"),
+        "thematic_area": data.get("thematic_area"),
+        "description": data.get("description"),
+        "source_url": data.get("source_url"),
+        "country": data.get("country"),
+        "deadline": data.get("deadline"),
+        "last_crawled_on": now(),
+        "hash": generated_hash
+    })
+
+
+    doc.save(ignore_permissions=True)
+
+    return {"status": "success"}
