@@ -14,8 +14,7 @@
   "source_url",
   "country",
   "deadline",
-  "last_crawled_on",
-  "hash"
+  "last_crawled_on"
  ],
  "fields": [
   {
@@ -27,8 +26,7 @@
   {
    "fieldname": "organization",
    "fieldtype": "Data",
-   "label": "Organization",
-   "unique": 1
+   "label": "Organization"
   },
   {
    "fieldname": "funding_amount",
@@ -56,11 +54,6 @@
    "label": "Last Crawled On"
   },
   {
-   "fieldname": "hash",
-   "fieldtype": "Data",
-   "label": "Hash"
-  },
-  {
    "fieldname": "country",
    "fieldtype": "Data",
    "label": "Country"
@@ -74,7 +67,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-11 12:35:02.292295",
+ "modified": "2026-02-16 11:21:07.328458",
  "modified_by": "Administrator",
  "module": "Scrapy",
  "name": "Scraping Site",
